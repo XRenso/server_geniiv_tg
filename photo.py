@@ -11,23 +11,22 @@ from random import shuffle
 
 
 def choose_bg(baza_file=0):
-    match baza_file:
-        case 0:
-            files = [f for f in listdir("pics/") if  f.startswith("baza") and f.endswith(".jpg")]
-            rand_file = numpy.random.randint(len(files)-1)
+    if baza_file == 0:
+        files = [f for f in listdir("pics/") if  f.startswith("baza") and f.endswith(".jpg")]
+        rand_file = numpy.random.randint(len(files)-1)
+        shuffle(files)
+        bg = Image.open(f"pics/{files[rand_file]}")
+        return bg
+    else:
+        try:
+            bg = Image.open(f"pics/baza{baza_file}.jpg")
+            return bg
+        except:
+            files = [f for f in listdir("pics/") if f.startswith("baza") and f.endswith(".jpg")]
+            rand_file = numpy.random.randint(len(files) - 1)
             shuffle(files)
             bg = Image.open(f"pics/{files[rand_file]}")
             return bg
-        case _:
-            try:
-                bg = Image.open(f"pics/baza{baza_file}.jpg")
-                return bg
-            except:
-                files = [f for f in listdir("pics/") if f.startswith("baza") and f.endswith(".jpg")]
-                rand_file = numpy.random.randint(len(files) - 1)
-                shuffle(files)
-                bg = Image.open(f"pics/{files[rand_file]}")
-                return bg
 
 MAX_W, MAX_H = 1280, 895
 
@@ -73,24 +72,24 @@ def start(text_i, console=True, edited='stay'):
         print('\n' + text_i + '\n')
         text_i = input('Редакция - ')
         text_i.lower()
-        match text_i:
-            case "skip":
-                sys.exit('Skipped')
-            case "stay":
-                text_i = stayed_text
-            case "new":
-                start(create_text())
-                succes = False
-            case _:
-                pass
+
+        if text_i == "skip":
+            sys.exit('Skipped')
+        elif text_i == "stay":
+            text_i = stayed_text
+        elif text_i == "new":
+            start(create_text())
+            succes = False
+        else:
+            pass
     elif console == False:
         edited.lower()
-        match edited:
-            case "skip":
-                succes = False
-                pass
-            case "_":
-                succes = True
+
+        if edited == "skip":
+            succes = False
+            pass
+        else:
+            succes = True
 
     if succes == True and console == True:
         return text_i
