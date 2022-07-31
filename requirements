@@ -1,0 +1,8 @@
+Pillow
+numpy
+requests
+pymorphy2
+pyjokes
+googletrans==4.0.0-rc1
+randfacts
+opencv-python
