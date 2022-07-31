@@ -22,18 +22,6 @@ class answers(StatesGroup):
     edited_fact = State()
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 @dp.message_handler(commands = ['start'])
 async def start(message: types.Message):
     await message.answer('Привет, этот бот принадлежит группе вк - Гений Гысли (@geniy_gisly). \nЗдесь можете создать свою цитату/факт используя комманды из списка.')
