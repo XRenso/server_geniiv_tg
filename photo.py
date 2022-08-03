@@ -83,9 +83,8 @@ def start(text_i, console=True, edited='stay'):
         else:
             pass
     elif console == False:
-        edited.lower()
 
-        if edited == "skip":
+        if edited.lower() == "skip":
             succes = False
             pass
         else:
