@@ -79,13 +79,13 @@ async def send_fact(text, chat_idd):
         if error == 'ernno':
             await bot.send_message(chat_idd, 'Успешная отмена')
         elif error == 'succes':
-            await bot.send_document(chat_idd, open('pics/ready.jpg', 'rb'))
+            await bot.send_document(chat_idd, open('pics/ready.png', 'rb'))
     elif text.lower() == 'stay':
         error = photo.create_smth(2,console=False,edited=stay_fact, BG=bga)
         if error == 'ernno':
             await bot.send_message(chat_idd, 'Успешная отмена')
         elif error == 'succes':
-            await bot.send_document(chat_idd, open('pics/ready.jpg', 'rb'))
+            await bot.send_document(chat_idd, open('pics/ready.png', 'rb'))
 
 @dp.message_handler(state=answers.edited_fact)
 async def edit_fact(message: types.Message, state:FSMContext):

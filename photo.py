@@ -10,23 +10,32 @@ from random import shuffle
 
 
 
-def choose_bg(baza_file=0):
+def choose_bg(baza_file=0, back=False):
     if baza_file == 0:
         files = [f for f in listdir("pics/") if  f.startswith("baza") and f.endswith(".jpg")]
         rand_file = numpy.random.randint(len(files)-1)
         shuffle(files)
         bg = Image.open(f"pics/{files[rand_file]}")
-        return bg
+        if back == False:
+            return bg
+        elif back == True:
+            return  f"pics/{files[rand_file]}"
     else:
         try:
             bg = Image.open(f"pics/baza{baza_file}.jpg")
-            return bg
+            if back == False:
+                return bg
+            elif back == True:
+                return f"pics/baza{baza_file}.jpg"
         except:
             files = [f for f in listdir("pics/") if f.startswith("baza") and f.endswith(".jpg")]
             rand_file = numpy.random.randint(len(files) - 1)
             shuffle(files)
             bg = Image.open(f"pics/{files[rand_file]}")
-            return bg
+            if back == False:
+                return bg
+            elif back == True:
+                return f"pics/{files[rand_file]}"
 
 MAX_W, MAX_H = 1280, 895
 
@@ -56,7 +65,7 @@ def create_baza(style, BG=0):
 
 
 myfont = ImageFont.truetype('c059-roman.ttf', 36)
-
+factfont = ImageFont.truetype('fact.OTF', 36)
 
 
 def create_text():
@@ -102,39 +111,65 @@ def count_bg():
     files = [f for f in listdir("pics/") if f.startswith("baza") and f.endswith(".jpg")]
     return len(files)
 
+def new_fact(BG=0):
+    bg = choose_bg(BG,True)
+    im1 = Image.open(bg)
+    im2 = Image.open('pics/new_fact_pattern.png')
+    text = Image.open('pics/new_fact_text.png').convert('RGBA')
+    avatar = Image.open('pics/avatar_fact.png').convert('RGBA')
+    im1.putalpha(256)
+    im2.putalpha(256)
+    ready_img = Image.blend(im2, im1, 0.1)
+    ready_img = ready_img.convert('RGB')
+    ready_img.save('pics/ready.jpg')
+    ready_img = Image.open('pics/ready.jpg').convert('RGBA')
+    ready_img.paste(text,text)
+    ready_img.paste(avatar,avatar)
+    ready_img.save('pics/ready.png')
 
 def create_smth(style, BG=0, console=True, edited='none'):
     global final_text
-    current_h, pad = 448, 10
-
+    if style == 1:
+        current_h, pad = 448, 10
+    elif style == 2:
+        current_h, pad = 300, 10
     if style == 2:
         if console == True:
-            create_baza(style, BG)
-            final_text = textwrap.wrap(text=start(create_text()), width=49)
+            new_fact(BG)
+            final_text = textwrap.wrap(text=start(create_text()), width=30)
         elif console == False:
             if edited == 'none':
                 return create_text()
             elif edited != 'none':
-                create_baza(style, BG)
+                new_fact(BG)
                 textik = start(text_i='none',edited=edited,console=False)
                 if textik != 'None':
-                    final_text = textwrap.wrap(text=textik, width=49)
+                    final_text = textwrap.wrap(text=textik, width=30)
                 elif textik == 'None':
                     return 'ernno'
     elif style == 1:
         create_baza(style, BG)
         final_text = textwrap.wrap(text=f"{main.get_random_quote()}{main.get_random_quote_name()}", width=49)
-    result = Image.open('pics/ready.jpg')
+    result = Image.open('pics/ready.png')
     add_text = ImageDraw.Draw(result)
     for line in final_text:
-        w, h = add_text.textsize(line, font=myfont)
-        add_text.text(((MAX_W - w) / 2, current_h), line, font=myfont)
-        current_h+= h + pad
-    result.save("pics/ready.jpg")
+        if style == 1:
+            w, h = add_text.textsize(line, font=myfont)
+            add_text.text(((MAX_W - w) / 2, current_h), line, font=myfont)
+            current_h+= h + pad
+        elif style == 2:
+            w, h = add_text.textsize(line, font=factfont)
+            add_text.text((MAX_W / 2, current_h), line, font=factfont)
+            current_h += h + pad
+
+
+    result.save("pics/ready.png")
     return 'succes'
 
 
+
 if __name__ == '__main__':
-    style = int(input('1)Цитата \n2)Факт \nЧто нужно - '))
-    bg = int(input('Фон - '))
-    create_smth(style)
+    # style = int(input('1)Цитата \n2)Факт \nЧто нужно - '))
+    # bg = int(input('Фон - '))
+    # create_smth(style)
+    create_smth(2,0,True)
