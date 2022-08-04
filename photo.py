@@ -150,7 +150,10 @@ def create_smth(style, BG=0, console=True, edited='none'):
     elif style == 1:
         create_baza(style, BG)
         final_text = textwrap.wrap(text=f"{main.get_random_quote()}{main.get_random_quote_name()}", width=49)
-    result = Image.open('pics/ready.jpg')
+    if style ==1:
+        result = Image.open('pics/ready.jpg')
+    elif style ==2:
+        result = Image.open('pics/ready.png')
     add_text = ImageDraw.Draw(result)
     for line in final_text:
         if style == 1:
