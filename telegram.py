@@ -58,7 +58,7 @@ async def create_quote(message: types.message):
     except:
         bg = 0
     photo.create_smth(1, bg)
-    await message.answer_document(open('pics/ready.png', 'rb'))
+    await message.answer_document(open('pics/ready.jpg', 'rb'))
 
 @dp.message_handler(commands=['create_fact'])
 async def create_fact(message: types.message):
