@@ -60,7 +60,7 @@ def create_baza(style, BG=0):
         text = cv2.imread("pics/quote_text.png")
 
     new_img = cv2.add(text,new_bg)
-    cv2.imwrite('pics/ready.jpg', new_img)
+    cv2.imwrite('pics/ready.png', new_img)
 
 
 
@@ -131,6 +131,8 @@ def create_smth(style, BG=0, console=True, edited='none'):
     global final_text
     if style == 1:
         current_h, pad = 448, 10
+        create_baza(style, BG)
+        final_text = textwrap.wrap(text=f"{main.get_random_quote()}{main.get_random_quote_name()}", width=49)
     elif style == 2:
         current_h, pad = 300, 10
     if style == 2:
@@ -147,13 +149,8 @@ def create_smth(style, BG=0, console=True, edited='none'):
                     final_text = textwrap.wrap(text=textik, width=30)
                 elif textik == 'None':
                     return 'ernno'
-    elif style == 1:
-        create_baza(style, BG)
-        final_text = textwrap.wrap(text=f"{main.get_random_quote()}{main.get_random_quote_name()}", width=49)
-    if style ==1:
-        result = Image.open('pics/ready.jpg')
-    elif style ==2:
-        result = Image.open('pics/ready.png')
+
+    result = Image.open('pics/ready.png')
     add_text = ImageDraw.Draw(result)
     for line in final_text:
         if style == 1:
