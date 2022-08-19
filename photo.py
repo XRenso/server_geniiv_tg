@@ -7,9 +7,6 @@ import numpy
 import sys
 from random import shuffle
 
-
-
-
 def choose_bg(baza_file=0, back=False):
     if baza_file == 0:
         files = [f for f in listdir("pics/") if  f.startswith("baza") and f.endswith(".jpg")]
@@ -47,6 +44,7 @@ text = None
 
 def create_baza(style, BG=0):
     bg = choose_bg(BG)
+    bg = bg.resize((MAX_W, MAX_H))
     enhancer = ImageEnhance.Brightness(bg)
 
     factor = 0.3
@@ -113,6 +111,7 @@ def count_bg():
 
 def new_fact(BG=0):
     bg = choose_bg(BG,True)
+    bg = bg.resize((MAX_W, MAX_H))
     im1 = Image.open(bg)
     im2 = Image.open('pics/new_fact_pattern.png')
     text = Image.open('pics/new_fact_text.png').convert('RGBA')
