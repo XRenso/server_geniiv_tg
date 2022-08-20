@@ -115,7 +115,10 @@ def count_bg():
 def new_fact(BG=0):
     continue_ = True
     bg = choose_bg(BG,True)
-    bg = bg.resize((MAX_W, MAX_H))
+    try:
+        bg = bg.resize((MAX_W, MAX_H))
+    except AttributeError:
+        continue_ == False
 
     if continue_ == True:
         im1 = Image.open(bg)
