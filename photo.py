@@ -115,10 +115,7 @@ def count_bg():
 def new_fact(BG=0):
     continue_ = True
     bg = choose_bg(BG,True)
-    try:
-        bg = bg.resize((MAX_W, MAX_H))
-    except:
-        continue_ = False
+    bg = bg.resize((MAX_W, MAX_H))
 
     if continue_ == True:
         im1 = Image.open(bg)
