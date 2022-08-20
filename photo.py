@@ -113,9 +113,14 @@ def count_bg():
     return len(files)
 
 def new_fact(BG=0):
+    continue_ = True
     bg = choose_bg(BG,True)
     try:
         bg = bg.resize((MAX_W, MAX_H))
+    except:
+        continue_ = False
+
+    if continue_ == True:
         im1 = Image.open(bg)
         im2 = Image.open('pics/new_fact_pattern.png')
         text = Image.open('pics/new_fact_text.png').convert('RGBA')
@@ -126,12 +131,9 @@ def new_fact(BG=0):
         ready_img = ready_img.convert('RGB')
         ready_img.save('pics/ready.jpg')
         ready_img = Image.open('pics/ready.jpg').convert('RGBA')
-        ready_img.paste(text, text)
-        ready_img.paste(avatar, avatar)
+        ready_img.paste(text,text)
+        ready_img.paste(avatar,avatar)
         ready_img.save('pics/ready.png')
-    except:
-        pass
-
 
 def create_smth(style, BG=0, console=True, edited='none'):
     global final_text
