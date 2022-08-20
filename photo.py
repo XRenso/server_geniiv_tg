@@ -44,7 +44,10 @@ text = None
 
 def create_baza(style, BG=0):
     bg = choose_bg(BG)
-    bg = bg.resize((MAX_W, MAX_H))
+    try:
+        bg = bg.resize((MAX_W, MAX_H))
+    except:
+        pass
     enhancer = ImageEnhance.Brightness(bg)
 
     factor = 0.3
@@ -111,7 +114,10 @@ def count_bg():
 
 def new_fact(BG=0):
     bg = choose_bg(BG,True)
-    bg = bg.resize((MAX_W, MAX_H))
+    try:
+        bg = bg.resize((MAX_W, MAX_H))
+    except:
+        pass
     im1 = Image.open(bg)
     im2 = Image.open('pics/new_fact_pattern.png')
     text = Image.open('pics/new_fact_text.png').convert('RGBA')
