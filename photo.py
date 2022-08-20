@@ -115,8 +115,8 @@ def count_bg():
 def new_fact(BG=0):
 
     bg = choose_bg(BG,True)
-    bg = bg.resize((MAX_W, MAX_H))
     im1 = Image.open(bg)
+    im1 = im1.resize((MAX_W, MAX_H))
     im2 = Image.open('pics/new_fact_pattern.png')
     text = Image.open('pics/new_fact_text.png').convert('RGBA')
     avatar = Image.open('pics/avatar_fact.png').convert('RGBA')
