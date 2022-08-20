@@ -118,7 +118,7 @@ def new_fact(BG=0):
     try:
         bg = bg.resize((MAX_W, MAX_H))
     except AttributeError:
-        continue_ == False
+        continue_ = False
 
     if continue_ == True:
         im1 = Image.open(bg)
