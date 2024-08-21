@@ -56,15 +56,18 @@ def make_fake(original=False, add_joke=True, censor=True, china_style=False):
     return ready
 
 
+
+
+
 def get_random_quote():
     try:
-        response = requests.get("https://quote-garden.herokuapp.com/api/v3/quotes/random")
+        api_url = 'https://api.api-ninjas.com/v1/quotes'
+        response = requests.get(api_url, headers={'X-Api-Key': 'noz3g8LxvR+iGBQXq54EGg==IKQZ3vDuf61IiUaF'})
+        # response = requests.get("https://quote-garden.herokuapp.com/api/v3/quotes/random")
         if response.status_code == 200:
 
             json_data = response.json()
-            data = json_data['data']
-
-            quote = data[0]['quoteText']
+            quote = json_data[0]['quote']
             quote_translate = translator.translate(quote, dest='ru', src='en')
             quote_translate = f"«{quote_translate.text}» - "
             return quote_translate
@@ -76,26 +79,26 @@ def get_random_quote():
 def get_random_quote_name():
     Man_of_quote = ''
     try:
-        response = requests.get("https://quote-garden.herokuapp.com/api/v3/quotes/random")
+        api_url = 'https://api.api-ninjas.com/v1/quotes'
+        response = requests.get(api_url, headers={'X-Api-Key': 'noz3g8LxvR+iGBQXq54EGg==IKQZ3vDuf61IiUaF'})
+        # response = requests.get("https://quote-garden.herokuapp.com/api/v3/quotes/random")
         if response.status_code == 200:
 
             json_data = response.json()
-            data = json_data['data']
-
-            name = data[0]['quoteAuthor'].split()
+            name = json_data[0]['author'].split()
             Man_of_quote += name[0]
         else:
             print("Error while getting Name")
     except:
         print("Something went wrong! Try Again!")
     try:
-        response = requests.get("https://quote-garden.herokuapp.com/api/v3/quotes/random")
+        api_url = 'https://api.api-ninjas.com/v1/quotes'
+        response = requests.get(api_url, headers={'X-Api-Key': 'noz3g8LxvR+iGBQXq54EGg==IKQZ3vDuf61IiUaF'})
+        # response = requests.get("https://quote-garden.herokuapp.com/api/v3/quotes/random")
         if response.status_code == 200:
 
             json_data = response.json()
-            data = json_data['data']
-
-            surrname = data[0]['quoteAuthor'].split()
+            surrname = json_data[0]['author'].split()
             Man_of_quote += f" {surrname[1]}"
         else:
             print("Error while getting Surrname")
@@ -106,5 +109,4 @@ def get_random_quote_name():
 
 if __name__ == '__main__':
     make_fake(original=False, censor=False, add_joke=False, china_style=False)
-    # print(get_random_quote())
     print(get_random_quote_name())

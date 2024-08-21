@@ -157,11 +157,11 @@ def create_smth(style, BG=0, console=True, edited='none'):
     add_text = ImageDraw.Draw(result)
     for line in final_text:
         if style == 1:
-            w, h = add_text.textsize(line, font=myfont)
+            _,_,w, h = add_text.textbbox((0,0),line, font=myfont)
             add_text.text(((MAX_W - w) / 2, current_h), line, font=myfont)
             current_h+= h + pad
         elif style == 2:
-            w, h = add_text.textsize(line, font=factfont)
+            _,_,w, h = add_text.textbbox((0,0),line, font=factfont)
             add_text.text((MAX_W / 2, current_h), line, font=factfont)
             current_h += h + pad
 
@@ -172,7 +172,6 @@ def create_smth(style, BG=0, console=True, edited='none'):
 
 
 if __name__ == '__main__':
-    # style = int(input('1)Цитата \n2)Факт \nЧто нужно - '))
-    # bg = int(input('Фон - '))
-    # create_smth(style)
-    create_smth(2,0,True)
+    style = int(input('1)Цитата \n2)Факт \nЧто нужно - '))
+    bg = int(input('Фон - '))
+    create_smth(style, bg)
