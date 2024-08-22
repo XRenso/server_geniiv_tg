@@ -2,7 +2,7 @@ import numpy.random
 import randfacts
 from googletrans import Translator
 import pyjokes
-import pymorphy2
+import pymorphy3
 import requests
 
 translator = Translator()
@@ -16,7 +16,7 @@ def generate(censor):
     return fa.text
 
 def make_china_style(ready):
-    morph = pymorphy2.MorphAnalyzer()
+    morph = pymorphy3.MorphAnalyzer()
     new_ready = ''
     j = ready.split()
     for i in j:
@@ -28,13 +28,17 @@ def make_fake(original=False, add_joke=True, censor=True, china_style=False):
     sec = generate(censor)
     while sec==fir:
         sec = generate(censor)
-    thi = translator.translate(pyjokes.get_joke(), dest='ru').text
+    
+    if add_joke:
+        thi = translator.translate(pyjokes.get_joke(), dest='ru').text
+        third = thi.split()
+        rand_jok = numpy.random.randint(len(third) - 1)
     first = fir.split()
     second = sec.split()
-    third = thi.split()
+    
     rand1 = numpy.random.randint(len(first)-1)
     rand2 = numpy.random.randint(len(second) - 1)
-    rand_jok = numpy.random.randint(len(third) - 1)
+    
     ready = ''
     for i in range(rand1+1):
         ready += first[i] + ' '
@@ -47,12 +51,8 @@ def make_fake(original=False, add_joke=True, censor=True, china_style=False):
     if china_style == True:
         ready = make_china_style(ready)
     if original == True:
-        if add_joke == True:
-            print(f"{fir}\n{sec} \n{thi}")
-        elif add_joke == False:
-            print(f"{fir}\n{sec}")
-    elif original == False:
-        pass
+        print(f"{fir}\n{sec} \n{thi}")
+
     return ready
 
 

@@ -1,7 +1,7 @@
 Pillow
 numpy
 requests
-pymorphy2
+pymorphy3
 pyjokes
 googletrans==4.0.0-rc1
 randfacts

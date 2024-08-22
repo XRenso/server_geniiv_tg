@@ -69,13 +69,13 @@ myfont = ImageFont.truetype('c059-roman.ttf', 36)
 factfont = ImageFont.truetype('fact.OTF', 36)
 
 
-def create_text():
-    text_i = main.make_fake(original=True,add_joke=False,censor=True,china_style=False)
+def create_text(original=True,add_joke=False,censor=True,china_style=False):
+    text_i = main.make_fake(original,add_joke,censor,china_style)
     return text_i
 
 
 
-def start(text_i, console=True, edited='stay'):
+def start(text_i, console=True, edited='stay',original=True,add_joke=False,censor=True,china_style=False):
     stayed_text = text_i
     succes = True
     if console == True:
@@ -88,7 +88,7 @@ def start(text_i, console=True, edited='stay'):
         elif text_i == "stay":
             text_i = stayed_text
         elif text_i == "new":
-            start(create_text())
+            start(create_text(original,add_joke,censor,china_style))
             succes = False
         else:
             pass
@@ -130,7 +130,7 @@ def new_fact(BG=0):
     ready_img.paste(avatar,avatar)
     ready_img.save('pics/ready.png')
 
-def create_smth(style, BG=0, console=True, edited='none'):
+def create_smth(style, BG=0, console=True, edited='none', original=True,add_joke=False,censor=True,china_style=False):
     global final_text
     if style == 1:
         current_h, pad = 448, 10
@@ -141,7 +141,7 @@ def create_smth(style, BG=0, console=True, edited='none'):
     if style == 2:
         if console == True:
             new_fact(BG)
-            final_text = textwrap.wrap(text=start(create_text()), width=30)
+            final_text = textwrap.wrap(text=start(create_text(original,add_joke,censor,china_style)), width=30)
         elif console == False:
             if edited == 'none':
                 return create_text()
@@ -174,4 +174,12 @@ def create_smth(style, BG=0, console=True, edited='none'):
 if __name__ == '__main__':
     style = int(input('1)Цитата \n2)Факт \nЧто нужно - '))
     bg = int(input('Фон - '))
-    create_smth(style, bg)
+    original = bool(int(input('Показывать оригинал (1 - True | 0 - False) - ')))
+    add_joke = bool(int(input('Добавить шутки? (1 - True | 0 - False) - ')))
+    censor = bool(int(input('Добавить цензуру? (1 - True | 0 - False) - ')))
+    china_style = bool(int(input('Сделать в китайском стиле (1 - True | 0 - False) - ')))
+
+    create_smth(style, bg,True,'none',original,add_joke,censor,china_style)
+
+
+#original=True,add_joke=False,censor=True,china_style=False)
